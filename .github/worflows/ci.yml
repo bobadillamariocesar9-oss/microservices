@@ -1,0 +1,26 @@
+name: Java CI with Maven
+
+# Cuándo se ejecutará este workflow
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # El servidor de GitHub donde correrá
+
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17' # Puedes cambiarlo a 21 u otra versión que uses
+          distribution: 'temurin'
+          cache: maven # Esto acelera las futuras ejecuciones guardando las dependencias
+
+      - name: Compilar y ejecutar pruebas con Maven
+        run: mvn -B package --file pom.xml
