@@ -1,31 +1,13 @@
-# Stage 1: Build the application
-# Usamos una imagen que incluye Maven y el JDK 17
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
-
+# Etapa 1: Construcción
+FROM maven:3.8.5-openjdk-17-slim AS build
 WORKDIR /app
-
-# Copy the pom.xml and download dependencies
 COPY pom.xml .
-RUN mvn dependency:go-offline
-
-# Copy the rest of the application source code
 COPY src ./src
-
-# Package the application
 RUN mvn clean package -DskipTests
 
-
-# Stage 2: Create the final, smaller image
-# Usamos el JRE moderno y ligero
-FROM eclipse-temurin:17-jre-alpine
-
+# Etapa 2: Ejecución
+FROM openjdk:17-jdk-slim
 WORKDIR /app
-
-# Copy the JAR from the build stage
-COPY --from=build /app/target/catalog-service-1.0-SNAPSHOT.jar ./app.jar
-
-# Expose the port the application runs on
-EXPOSE 8081
-
-# Command to run the application
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
