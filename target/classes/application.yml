@@ -1,0 +1,4 @@
+server:
+  port: 8081
+  polar:
+    greeting: Welcome to the local book catalog!

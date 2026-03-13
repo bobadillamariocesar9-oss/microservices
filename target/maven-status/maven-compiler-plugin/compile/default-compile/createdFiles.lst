@@ -1,0 +1,12 @@
+com\polarbookshop\catalogservice\domain\BookService.class
+com\polarbookshop\catalogservice\CatalogServiceApplication.class
+com\polarbookshop\catalogservice\exception\BookNotFoundException.class
+com\polarbookshop\catalogservice\config\PolarProperties.class
+com\polarbookshop\catalogservice\web\BookControllerAdvice.class
+com\polarbookshop\catalogservice\exception\BookAlreadyExistsException.class
+com\polarbookshop\catalogservice\HomeController.class
+META-INF\spring-configuration-metadata.json
+com\polarbookshop\catalogservice\domain\BookRepository.class
+com\polarbookshop\catalogservice\domain\Book.class
+com\polarbookshop\catalogservice\web\BookController.class
+com\polarbookshop\catalogservice\persistence\InMemoryBookRepository.class

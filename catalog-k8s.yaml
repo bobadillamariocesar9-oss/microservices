@@ -1,0 +1,35 @@
+# --- PARTE 1: EL DEPLOYMENT ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deployment
+spec:
+  replicas: 1 # Empezamos con una sola instancia
+  selector:
+    matchLabels:
+      app: catalog-app
+  template:
+    metadata:
+      labels:
+        app: catalog-app
+    spec:
+      containers:
+        - name: catalog-container
+          image: catalog-service:latest
+          imagePullPolicy: Never # Crucial: le dice a K8s que use la imagen local que acabas de compilar
+          ports:
+            - containerPort: 8081 # El puerto donde escucha tu aplicación Java
+
+---
+# --- PARTE 2: EL SERVICE ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-service-network
+spec:
+  type: NodePort # Esto permite exponer el puerto hacia afuera de Minikube
+  selector:
+    app: catalog-app # Así es como el Service sabe a qué Pods enviar el tráfico
+  ports:
+    - port: 8081
+      targetPort: 8081
